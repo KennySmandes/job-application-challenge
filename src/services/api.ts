@@ -28,6 +28,9 @@ export const getJobs = async () => {
 };
 
 export const applyToJob = async (data: {
+  uuid: string;
+  jobId: string;
+  candidateId: string;
   applicationId: string;
   repoUrl: string;
 }) => {

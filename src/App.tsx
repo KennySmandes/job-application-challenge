@@ -74,7 +74,7 @@ function App() {
   );
 }
 
-function JobForm({ candidate }: { job: Job; candidate: Candidate }) {
+function JobForm({ job, candidate }: { job: Job; candidate: Candidate }) {
   const [repoUrl, setRepoUrl] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -89,21 +89,21 @@ function JobForm({ candidate }: { job: Job; candidate: Candidate }) {
     setMessage(null);
 
     try {
-      const response = await applyToJob({
+      await applyToJob({
+        uuid: candidate.uuid,
+        jobId: job.id, // 🔥 sale del job
+        candidateId: candidate.candidateId,
         applicationId: candidate.applicationId,
         repoUrl,
       });
 
-      if (response.ok) {
-        setMessage("Postulación enviada correctamente");
-      }
+      setMessage("Postulación enviada correctamente");
     } catch (err: any) {
       setMessage("Error: " + err.message);
     } finally {
       setSending(false);
     }
   };
-
   return (
     <div style={styles.form}>
       <input
