@@ -74,7 +74,7 @@ function App() {
   );
 }
 
-function JobForm({ job, candidate }: { job: Job; candidate: Candidate }) {
+function JobForm({ candidate }: { job: Job; candidate: Candidate }) {
   const [repoUrl, setRepoUrl] = useState("");
   const [message, setMessage] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
@@ -90,9 +90,7 @@ function JobForm({ job, candidate }: { job: Job; candidate: Candidate }) {
 
     try {
       const response = await applyToJob({
-        uuid: candidate.uuid,
-        jobId: job.id,
-        candidateId: candidate.candidateId,
+        applicationId: candidate.applicationId,
         repoUrl,
       });
 

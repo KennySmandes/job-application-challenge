@@ -27,23 +27,25 @@ export const getJobs = async () => {
   return data;
 };
 
-export const applyToJob = async (body: {
-  uuid: string;
-  jobId: string;
-  candidateId: string;
+export const applyToJob = async (data: {
+  applicationId: string;
   repoUrl: string;
 }) => {
-  const res = await fetch(`${BASE_URL}/api/candidate/apply-to-job`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  const response = await fetch(
+    "https://botfilter-h5ddh6dye8exb7ha.centralus-01.azurewebsites.net/api/candidate/apply-to-job",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
 
-  const data = await res.json();
-
-  if (!res.ok) {
-    throw new Error(data.message || "Error applying");
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.error || "Error applying to job");
   }
 
-  return data;
+  return response.json();
 };
